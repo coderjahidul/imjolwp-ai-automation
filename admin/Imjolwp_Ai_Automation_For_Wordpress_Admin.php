@@ -201,24 +201,32 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 	}
 
 	/**
-	 * Display the input field for API URL.
-	 *
-	 * @since 1.0.0
-	 */
-	public function display_api_url_field() {
-		$api_url = get_option( 'imjolwp_ai_api_url' ); // Get the current saved API URL
-		echo "<input type='text' placeholder='Enter Deepinfra API URL' name='imjolwp_ai_api_url' value='" . esc_attr( $api_url ) . "' class='regular-text' />";
-	}
+ * Display the input field for API URL.
+ *
+ * @since 1.0.0
+ */
+public function display_api_url_field() {
+    $api_url = get_option( 'imjolwp_ai_api_url' ); // Get the current saved API URL
+    echo "<label for='imjolwp_ai_api_url'><strong>Deepinfra API URL:</strong></label><br>";
+    echo "<input type='text' id='imjolwp_ai_api_url' placeholder='Enter Deepinfra API URL' name='imjolwp_ai_api_url' value='" . esc_attr( $api_url ) . "' class='regular-text' />";
+	// Example
+	echo "<p>Example: https://api.deepinfra.com</p>";
+}
 
-	/**
-	 * Display the input field for API Key.
-	 *
-	 * @since 1.0.0
-	 */
-	public function display_api_key_field() {
-		$api_key = get_option( 'imjolwp_ai_api_key' ); // Get the current saved API Key
-		echo "<input type='password' placeholder='Enter Deepinfra API Key' name='imjolwp_ai_api_key' value='" . esc_attr( $api_key ) . "' class='regular-text' />";
-	}
+/**
+ * Display the input field for API Key.
+ *
+ * @since 1.0.0
+ */
+public function display_api_key_field() {
+    $api_key = get_option( 'imjolwp_ai_api_key' ); // Get the current saved API Key
+    echo "<label for='imjolwp_ai_api_key'><strong>Deepinfra API Key:</strong></label><br>";
+    echo "<input type='password' id='imjolwp_ai_api_key' placeholder='Enter Deepinfra API Key' name='imjolwp_ai_api_key' value='" . esc_attr( $api_key ) . "' class='regular-text' />";
+
+	// Example
+	echo "<p>Example: 1w23w4w56w78e9r0</p>";
+}
+
 
 
 
