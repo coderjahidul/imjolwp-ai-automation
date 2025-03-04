@@ -58,7 +58,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
             // Extract content between <p><strong>Meta Description:</strong></p>
             preg_match('/<p><strong>Meta Description:<\/strong>(.*?)<\/p>/s', $generated_content, $matches);
             $post_meta_description = isset($matches[1]) ? trim($matches[1]) : '';
-            put_program_logs($post_meta_description);
         }else {
             $post_meta_description = '';
         }
