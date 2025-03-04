@@ -18,10 +18,9 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
      * @param string $post_status
      * @param string $post_type
      * @param int $author_id
-     * @param bool $post_tags
      */
 
-    public function queue_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags){
+    public function queue_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id){
         // Call the generate_description function
         $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
         $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
@@ -76,7 +75,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
         }
 
         // enable tags Generate using ai
-        if($post_tags == true){
+        if(get_option('ai_post_tags') == 1){
             // Call the post_tags_function
             preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
             // Apply str_replace to modify the tags part
@@ -92,7 +91,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
         }
 
         // Set post tags (this is handled separately)
-        if ($post_tags == true && !empty($tags_array)) {
+        if (get_option('ai_post_tags') == 1 && !empty($tags_array)) {
             wp_set_post_tags($post_id, $tags_array);
         }
 

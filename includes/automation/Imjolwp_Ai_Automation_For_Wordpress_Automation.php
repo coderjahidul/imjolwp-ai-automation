@@ -24,15 +24,14 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
      * @param string $post_status
      * @param string $post_type
      * @param int $author_id
-     * @param bool $post_tags
      * @param string $schedule_time
      */
 
-    public function schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags, $schedule_time) {
+    public function schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $schedule_time) {
         // Schedule the task - 6 hours from now
         $timestamp = strtotime($schedule_time) - 6 * 60 * 60;
         if ($timestamp) {
-            wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags]);
+            wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id]);
             echo '<div class="updated"><p>AI Content Generation Scheduled!</p></div>';
         }
     }
@@ -47,10 +46,9 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
      * @param string $post_status
      * @param string $post_type
      * @param int $author_id
-     * @param bool $post_tags
      */
 
-    public function generate_scheduled_content($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags) {
+    public function generate_scheduled_content($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id) {
         // Call the generate_description function
         $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
         $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
@@ -104,7 +102,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
         }
 
         // enable tags Generate using ai
-        if($post_tags == true){
+        if(get_option('ai_post_tags') == 1){
             // Call the post_tags_function
             preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
             // Apply str_replace to modify the tags part
@@ -120,7 +118,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
         }
 
         // Set post tags (this is handled separately)
-        if ($post_tags == true && !empty($tags_array)) {
+        if (get_option('ai_post_tags') == 1 && !empty($tags_array)) {
             wp_set_post_tags($post_id, $tags_array);
         }
 

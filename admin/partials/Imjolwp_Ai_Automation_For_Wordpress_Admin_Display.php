@@ -48,14 +48,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                     </tr>
 
                     <tr>
-                        <th scope="row"><label for="post_tags">Post Tags</label></th>
-                        <td>
-                            <input type="checkbox" id="post_tags" name="post_tags" value="1">
-                            <label for="post_tags">Enable Post Tags Generate</label>
-                        </td>
-                    </tr>
-
-                    <tr>
                         <th scope="row"><label for="language">Language</label></th>
                         <td>
                             <select id="language" name="language" class="regular-select">
@@ -117,7 +109,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                 // Get related words separated by commas
                 $focus_keywords = sanitize_text_field($_POST['focus_keywords']);
                 $word_count = intval($_POST['min_word_count']);
-                $post_tags = isset($_POST['post_tags']) ? true : false;
                 $language = sanitize_text_field($_POST['language']);
                 $post_status = sanitize_text_field($_POST['post_status']);
                 $post_type = sanitize_text_field($_POST['post_types']);
@@ -128,10 +119,10 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                 // If schedule automation is enabled, schedule the AI content generation.
                 if ($schedule_automation && !empty($schedule_time)) {
                     $automation = new Imjolwp_Ai_Automation_For_Wordpress_Automation();
-                    $automation->schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags, $schedule_time);
+                    $automation->schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $schedule_time);
                 } else {
                     $queue = new Imjolwp_Ai_Automation_For_Wordpress_Queue();
-                    $queue->queue_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags);
+                    $queue->queue_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id);
                 }
             }
             ?>

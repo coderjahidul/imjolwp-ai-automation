@@ -22,8 +22,9 @@ class Imjolwp_Ai_Automation_For_Wordpress_Dashboard {
                     $features = [
                         'ai_post_title' => __('Post Title', 'imjolwp-ai-automation'),
                         'ai_post_description' => __('Post Description', 'imjolwp-ai-automation'),
-                        'ai_post_seo_meta_description' => __('Post SEO Meta Description', 'imjolwp-ai-automation'),
+                        'ai_post_tags' => __('Post Tags', 'imjolwp-ai-automation'),
                         'ai_post_image' => __('Post Image', 'imjolwp-ai-automation'),
+                        'ai_post_seo_meta_description' => __('Post SEO Meta Description', 'imjolwp-ai-automation'),
                         'ai_post_audio' => __('Post Audio', 'imjolwp-ai-automation'),
                         'ai_post_video' => __('Post Video', 'imjolwp-ai-automation'),
                     ];
