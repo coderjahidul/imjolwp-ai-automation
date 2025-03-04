@@ -22,12 +22,62 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
      */
 
     public function queue_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags){
+        // Call the generate_description function
+        $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
+        $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
+        
         // Generate AI Description if enabled.
         if(get_option('ai_post_description') == 1){
-            // Call the generate_description function
-            $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
-            $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
 
+            // Extract content between <p><strong>Introduction:</strong></p>
+            preg_match('/<p><strong>Introduction:<\/strong>(.*?)<\/p>/s', $generated_content, $matches);
+
+            // Store the extracted content in $introduction
+            $main_content = "<p><strong>Introduction:</strong> " . (isset($matches[1]) ? trim($matches[1]) : '') . "</p>";
+
+            // Extract content between <h2>Main Content</h2> and <h2>Conclusion</h2>
+            preg_match('/<h2>Main Content<\/h2>(.*?)<h2>Conclusion<\/h2>/s', $generated_content, $matches);
+
+            // Store the extracted content in $main_content
+            $main_content .= isset($matches[1]) ? trim($matches[1]) : '';
+        }else{
+            $main_content = '';
+        }
+
+        // Generate AI Title if enabled.
+        if(get_option('ai_post_title') == 1){
+            // Call the Post Title function
+            preg_match('/<h1>(.*?)<\/h1>/', $generated_content, $matches);
+            $title = isset($matches[1]) ? trim($matches[1]) : 'Default Title';
+        }else{
+            $title = $title;
+        }
+
+        // Generate AI Excerpt if enabled.
+        if(get_option('ai_post_seo_meta_description') == 1){
+            // Extract content between <p><strong>Meta Description:</strong></p>
+            preg_match('/<p><strong>Meta Description:<\/strong>(.*?)<\/p>/s', $generated_content, $matches);
+            $post_meta_description = isset($matches[1]) ? trim($matches[1]) : '';
+            put_program_logs($post_meta_description);
+        }else {
+            $post_meta_description = '';
+        }
+        
+        // Save as Post immediately
+        $post_id = wp_insert_post([
+            'post_title'   => $title,
+            'post_content' => $main_content,
+            'post_status'  => $post_status,
+            'post_type'    => $post_type
+        ]);
+
+        // set add meta description
+        if($post_id){
+            update_post_meta($post_id, '_yoast_wpseo_metadesc', $post_meta_description);
+        }
+
+        // enable tags Generate using ai
+        if($post_tags == true){
             // Call the post_tags_function
             preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
             // Apply str_replace to modify the tags part
@@ -39,17 +89,8 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
                 str_replace($matches[1], implode(', ', $tags_array), $generated_content);
             }
         }else{
-            $generated_content = '';
             $tags_array = null;
         }
-        
-        // Save as Post immediately
-        $post_id = wp_insert_post([
-            'post_title'   => $title,
-            'post_content' => $generated_content,
-            'post_status'  => $post_status,
-            'post_type'    => $post_type
-        ]);
 
         // Set post tags (this is handled separately)
         if ($post_tags == true && !empty($tags_array)) {
