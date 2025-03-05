@@ -69,9 +69,25 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
             'post_type'    => $post_type
         ]);
 
-        // set add meta description
-        if($post_id){
+        // Generate Focus Keywords
+        if ($post_id) {
+            // Generate focus keywords
+            $focus_keywords = generate_focus_keywords($focus_keywords);
+
+            // Save Focus Keywords in Yoast SEO
+            update_post_meta($post_id, '_yoast_wpseo_focuskw', $focus_keywords);
+        }
+
+        // Generate Meta Description
+        if ($post_id) {
+            // Save Yoast SEO meta description
             update_post_meta($post_id, '_yoast_wpseo_metadesc', $post_meta_description);
+        
+            // Save Yoast SEO Facebook description
+            update_post_meta($post_id, '_yoast_wpseo_opengraph-description', $post_meta_description);
+        
+            // Save Yoast SEO Twitter description
+            update_post_meta($post_id, '_yoast_wpseo_twitter-description', $post_meta_description);
         }
 
         // enable tags Generate using ai

@@ -113,6 +113,22 @@ function put_program_logs( $data ) {
     }
 }
 
+// Generate focus keywords function
+function generate_focus_keywords($text) {
+    $text = strtolower(strip_tags($text)); // Convert to lowercase & remove HTML tags
+    $text = preg_replace('/[^a-z0-9\s]/', '', $text); // Remove special characters
+    $words = explode(' ', $text); // Split into words
+
+    // Common words to ignore
+    $stop_words = ['i', 'the', 'and', 'for', 'with', 'a', 'to', 'is', 'on', 'by', 'at', 'it', 'in', 'of', 'as', 'this', 'that'];
+
+    // Filter out common words and select unique keywords
+    $keywords = array_diff($words, $stop_words);
+    $keywords = array_unique($keywords);
+
+    return implode(' ', array_slice($keywords, 0, 5)); // Limit to 5 keywords
+}
+
 
 add_action('plugins_loaded', function() {
     new \Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation();
