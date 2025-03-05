@@ -3,6 +3,7 @@ namespace Imjolwp\Admin;
 use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Settings;
 use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Dashboard;
 use Imjolwp\Admin\Partials\Imjolwp_Ai_Automation_For_Wordpress_Admin_Display;
+use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list;
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -135,6 +136,25 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 			'dashicons-art',          // Dashicon icon
 			25                        // Position
 		);
+
+		add_submenu_page(
+			'imjolwp-ai-dashboard',
+			'Post Scheduler List',
+			'Post Scheduler List',
+			'manage_options',
+			'imjolwp-ai-scheduled-posts',
+			array($this, 'imjolwp_ai_scheduled_posts_page')
+		);
+
+		// add_menu_page(
+		// 	'Scheduled AI Posts',
+		// 	'AI Scheduled Posts',
+		// 	'manage_options',
+		// 	'imjolwp-ai-scheduled-posts',
+		// 	'imjolwp_ai_scheduled_posts_page',
+		// 	'dashicons-schedule',
+		// 	25
+		// );
 
 		add_submenu_page(
             'imjolwp-ai-dashboard',
@@ -281,4 +301,8 @@ public function display_api_key_field() {
         $ai_post_generator->display_settings_page();
     }
 
+	public function imjolwp_ai_scheduled_posts_page(){
+		$post_event_scheduled_list = new Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list();
+		$post_event_scheduled_list->imjolwp_ai_scheduled_events_list();
+	}
 }
