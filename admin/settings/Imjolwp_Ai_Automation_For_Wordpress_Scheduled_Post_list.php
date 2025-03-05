@@ -77,45 +77,78 @@ class Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list{
 						foreach ($events as $hook => $details) {
 							if ($hook === 'ai_content_generate_event') {
 								$args = reset($details)['args'];
+								print_r($args);
 								?>
 								<h2>Edit Scheduled Post</h2>
-								<form method="post">
-									<input type="hidden" name="edit_timestamp" value="<?php echo esc_attr($edit_timestamp); ?>">
-									<p>
-										<label>Title:</label>
-										<input type="text" name="title" value="<?php echo esc_attr($args[0]); ?>" required>
-									</p>
-									<p>
-										<label>Word Count:</label>
-										<input type="number" name="word_count" value="<?php echo esc_attr($args[1]); ?>" required>
-									</p>
-									<p>
-										<label>Language:</label>
-										<input type="text" name="language" value="<?php echo esc_attr($args[2]); ?>" required>
-									</p>
-									<p>
-										<label>Focus Keywords:</label>
-										<input type="text" name="focus_keywords" value="<?php echo esc_attr($args[3]); ?>" required>
-									</p>
-									<p>
-										<label>Post Status:</label>
-										<select name="post_status">
-											<option value="draft" <?php selected($args[4], 'draft'); ?>>Draft</option>
-											<option value="publish" <?php selected($args[4], 'publish'); ?>>Publish</option>
-										</select>
-									</p>
-									<p>
-										<label>Post Type:</label>
-										<input type="text" name="post_type" value="<?php echo esc_attr($args[5]); ?>" required>
-									</p>
-									<p>
-										<label>Author ID:</label>
-										<input type="number" name="author_id" value="<?php echo esc_attr($args[6]); ?>" required>
-									</p>
-									<p>
-										<input type="submit" name="update_schedule" value="Update Schedule" class="button button-primary">
-									</p>
-								</form>
+                                <form method="post" class="ai-content-form">
+                                    <input type="hidden" name="edit_timestamp" value="<?php echo esc_attr($edit_timestamp); ?>">
+
+                                    <table class="form-table">
+                                        <tr>
+                                            <th scope="row"><label for="title">Title</label></th>
+                                            <td><input type="text" id="title" name="title" value="<?php echo esc_attr($args[0]); ?>" required class="regular-text"></td>
+                                        </tr>
+
+										<tr>
+                                            <th scope="row"><label for="focus_keywords">Focus Keywords</label></th>
+                                            <td><input type="text" id="focus_keywords" name="focus_keywords" value="<?php echo esc_attr($args[3]); ?>" required class="regular-text"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th scope="row"><label for="word_count">Word Count</label></th>
+                                            <td><input type="number" id="word_count" name="word_count" value="<?php echo esc_attr($args[1]); ?>" required class="small-text"></td>
+                                        </tr>
+
+										<tr>
+											<th scope="row"><label for="language">Language</label></th>
+											<td>
+												<select id="language" name="language" class="regular-select">
+													<option value="en" <?php selected( $args[2], 'en' )?>>English</option>
+													<option value="es" <?php selected( $args[2], 'es' )?>>Spanish</option>
+													<option value="fr" <?php selected( $args[2], 'fr' )?>>French</option>
+													<option value="de" <?php selected( $args[2], 'de' )?>>German</option>
+													<option value="bn" <?php selected( $args[2], 'bn' )?>>বাংলা (Bangla)</option>
+												</select>
+											</td>
+										</tr>
+
+                                        <tr>
+                                            <th scope="row"><label for="post_status">Post Status</label></th>
+                                            <td>
+                                                <select id="post_status" name="post_status" class="regular-select">
+                                                    <option value="draft" <?php selected($args[4], 'draft'); ?>>Draft</option>
+                                                    <option value="publish" <?php selected($args[4], 'publish'); ?>>Publish</option>
+													<option value="pending" <?php selected($args[4], 'pending'); ?>>Pending Review</option>
+													<option value="private" <?php selected($args[4], 'private'); ?>>Private</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th scope="row"><label for="post_type">Post Type</label></th>
+                                            <td>
+												<select id="post_type" name="post_types" class="regular-select">
+													<?php
+														$post_types = get_post_types(['public' => true], 'objects');
+														foreach ($post_types as $post_type) {
+															echo '<option value="' . esc_attr($post_type->name) . '" ' . selected($args[5], $post_type->name) . '>' . esc_html($post_type->labels->singular_name) . '</option>';
+														}
+													?>
+												</select>
+											</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th scope="row"><label for="author_id">Author ID</label></th>
+                                            <td><input type="number" id="author_id" name="author_id" value="<?php echo esc_attr($args[6]); ?>" required class="small-text"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th scope="row">&nbsp;</th>
+                                            <td><input type="submit" name="update_schedule" value="Update Schedule" class="button button-primary"></td>
+                                        </tr>
+                                    </table>
+                                </form>
 								<?php
 							}
 						}
@@ -147,12 +180,14 @@ class Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list{
 			}
 	
 			// Delete scheduled event
-            if (isset($_GET['delete'])) { // Corrected from 'cancel' to 'delete'
-                $timestamp = intval($_GET['delete']);
-                wp_unschedule_event($timestamp, 'ai_content_generate_event');
-                echo '<div class="updated"><p>Scheduled post deleted.</p></div>';
-            }
+			if(isset($_GET['delete'])){
+				$delete_timestamp = intval($_GET['delete']);
+				$args = isset($args) ? $args : [];
 
+				// Unschedule the event using the timestamp and arguments
+				wp_unschedule_event($delete_timestamp, 'ai_content_generate_event', $args);
+				echo '<div class="updated"><p>Scheduled post deleted.</p></div>';
+			}
 			?>
 		</div>
 		<?php
