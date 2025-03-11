@@ -86,36 +86,9 @@ function run_imjolwp_ai_automation_for_wordpress() {
 }
 run_imjolwp_ai_automation_for_wordpress();
 
-// Function to append data to a log file
-function put_program_logs( $data ) {
-
-    // Ensure the directory for logs exists
-    $directory = __DIR__ . '/program_logs/';
-    if ( ! file_exists( $directory ) ) {
-        // Use wp_mkdir_p instead of mkdir
-        if ( ! wp_mkdir_p( $directory ) ) {
-            return "Failed to create directory.";
-        }
-    }
-
-    // Construct the log file path
-    $file_name = $directory . 'program_logs.log';
-
-    // Append the current datetime to the log entry
-    $current_datetime = gmdate( 'Y-m-d H:i:s' ); // Use gmdate instead of date
-    $data             = $data . ' - ' . $current_datetime;
-
-    // Write the log entry to the file
-    if ( file_put_contents( $file_name, $data . "\n\n", FILE_APPEND | LOCK_EX ) !== false ) {
-        return "Data appended to file successfully.";
-    } else {
-        return "Failed to append data to file.";
-    }
-}
-
 // Generate focus keywords function
 function generate_focus_keywords($text) {
-    $text = strtolower(strip_tags($text)); // Convert to lowercase & remove HTML tags
+	$text = strtolower(wp_strip_all_tags($text)); // Convert to lowercase & remove HTML tags
     $text = preg_replace('/[^a-z0-9\s]/', '', $text); // Remove special characters
     $words = explode(' ', $text); // Split into words
 
@@ -133,37 +106,3 @@ function generate_focus_keywords($text) {
 add_action('plugins_loaded', function() {
     new \Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation();
 });
-
-
-
-// if (!class_exists('Imjolwp\Admin\Partials\Imjolwp_Ai_Automation_For_Wordpress_Admin_Display')) {
-//     require_once __DIR__ . '/admin/partials/Imjolwp_Ai_Automation_For_Wordpress_Admin_Display.php';
-// }
-
-// if(!class_exists('Imjolwp\Settings\Imjolwp_Ai_Automation_For_Wordpress_Dashboard')) {
-//     require_once __DIR__ . '/admin/settings/Imjolwp_Ai_Automation_For_Wordpress_Dashboard.php';
-// }
-
-// if(!class_exists('Imjolwp\Settings\Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list')) {
-//     require_once __DIR__ . '/admin/settings/Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list.php';
-// }
-
-// if(!class_exists('Imjolwp\Settings\Imjolwp_Ai_Automation_For_Wordpress_Settings')) {
-//     require_once __DIR__ . '/admin/settings/Imjolwp_Ai_Automation_For_Wordpress_Settings.php';
-// }
-
-// if(!class_exists('Imjolwp\Admin\Imjolwp_Ai_Automation_For_Wordpress_Admin')) {
-//     require_once __DIR__ . '/admin/Imjolwp_Ai_Automation_For_Wordpress_Admin.php';
-// }
-
-// if(!class_exists('Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation')) {
-//     require_once __DIR__ . '/includes/automation/Imjolwp_Ai_Automation_For_Wordpress_Automation.php';
-// }
-
-// if(!class_exists('Imjolwp\AAutomation\Imjolwp_Ai_Automation_For_Wordpress_Queue')) {
-//     require_once __DIR__ . '/includes/automation/Imjolwp_Ai_Automation_For_Wordpress_Queue.php';
-// }
-
-// if(!class_exists('Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description')) {
-//     require_once __DIR__ . '/includes/ai/Imjolwp_Ai_Automation_For_Wordpress_Ai_Description.php';
-// }
