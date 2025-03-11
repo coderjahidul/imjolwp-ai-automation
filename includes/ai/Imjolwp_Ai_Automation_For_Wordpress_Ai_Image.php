@@ -3,6 +3,10 @@ namespace Imjolwp\Ai;
 use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl;
 class Imjolwp_Ai_Automation_For_Wordpress_Ai_Image {
 
+    public function __construct() {
+        require_once plugin_dir_path( __FILE__ ) . './Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl.php';
+    }
+
     /**
      * Generates an AI-based image URL from the post title.
      *

@@ -8,6 +8,10 @@ use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl;
  */
 class Imjolwp_Ai_Automation_For_Wordpress_Ai_Description {
 
+    public function __construct() {
+        require_once plugin_dir_path( __FILE__ ) . './Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl.php';
+    }
+
     /**
      * Generate AI-powered description for a post.
      *

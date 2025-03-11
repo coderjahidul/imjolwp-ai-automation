@@ -12,6 +12,8 @@ use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Image;
 class Imjolwp_Ai_Automation_For_Wordpress_Automation {
     public function __construct() {
         add_action('ai_content_generate_event', [$this, 'generate_scheduled_content'], 10, 9);
+        require_once plugin_dir_path( __FILE__ ) . '../ai/Imjolwp_Ai_Automation_For_Wordpress_Ai_Description.php';
+        require_once plugin_dir_path( __FILE__ ) . '../ai/Imjolwp_Ai_Automation_For_Wordpress_Ai_Image.php';
     }
 
     /**

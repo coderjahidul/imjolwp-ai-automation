@@ -134,3 +134,36 @@ add_action('plugins_loaded', function() {
     new \Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation();
 });
 
+
+
+// if (!class_exists('Imjolwp\Admin\Partials\Imjolwp_Ai_Automation_For_Wordpress_Admin_Display')) {
+//     require_once __DIR__ . '/admin/partials/Imjolwp_Ai_Automation_For_Wordpress_Admin_Display.php';
+// }
+
+// if(!class_exists('Imjolwp\Settings\Imjolwp_Ai_Automation_For_Wordpress_Dashboard')) {
+//     require_once __DIR__ . '/admin/settings/Imjolwp_Ai_Automation_For_Wordpress_Dashboard.php';
+// }
+
+// if(!class_exists('Imjolwp\Settings\Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list')) {
+//     require_once __DIR__ . '/admin/settings/Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list.php';
+// }
+
+// if(!class_exists('Imjolwp\Settings\Imjolwp_Ai_Automation_For_Wordpress_Settings')) {
+//     require_once __DIR__ . '/admin/settings/Imjolwp_Ai_Automation_For_Wordpress_Settings.php';
+// }
+
+// if(!class_exists('Imjolwp\Admin\Imjolwp_Ai_Automation_For_Wordpress_Admin')) {
+//     require_once __DIR__ . '/admin/Imjolwp_Ai_Automation_For_Wordpress_Admin.php';
+// }
+
+// if(!class_exists('Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation')) {
+//     require_once __DIR__ . '/includes/automation/Imjolwp_Ai_Automation_For_Wordpress_Automation.php';
+// }
+
+// if(!class_exists('Imjolwp\AAutomation\Imjolwp_Ai_Automation_For_Wordpress_Queue')) {
+//     require_once __DIR__ . '/includes/automation/Imjolwp_Ai_Automation_For_Wordpress_Queue.php';
+// }
+
+// if(!class_exists('Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description')) {
+//     require_once __DIR__ . '/includes/ai/Imjolwp_Ai_Automation_For_Wordpress_Ai_Description.php';
+// }

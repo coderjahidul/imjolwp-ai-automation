@@ -8,6 +8,11 @@ use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Image;
 
 class Imjolwp_Ai_Automation_For_Wordpress_Queue{
 
+    public function __construct() {
+        require_once plugin_dir_path( __FILE__ ) . '../ai/Imjolwp_Ai_Automation_For_Wordpress_Ai_Description.php';
+        require_once plugin_dir_path( __FILE__ ) . '../ai/Imjolwp_Ai_Automation_For_Wordpress_Ai_Image.php';
+    }
+
     /**
      * Generate AI-generated content and create a WordPress post.
      *
