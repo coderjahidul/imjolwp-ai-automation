@@ -77,7 +77,7 @@ class Imjolwp_Ai_Automation_For_Wordpress {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'imjolwp-ai-automation-for-wordpress';
+		$this->plugin_name = 'imjolwp-ai-automation';
 
 		$this->load_dependencies();
 		$this->set_locale();

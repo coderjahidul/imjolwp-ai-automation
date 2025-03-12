@@ -101,7 +101,14 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/imjolwp-ai-automation-for-wordpress-admin.css', array(), $this->version, 'all' );
+		wp_register_style(
+			$this->plugin_name, 
+			plugins_url('admin/css/imjolwp-ai-automation-admin.css', dirname(__FILE__)), 
+			array(), 
+			$this->version, 
+			'all'
+		);
+		wp_enqueue_style($this->plugin_name);
 
 	}
 
@@ -124,7 +131,14 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/imjolwp-ai-automation-for-wordpress-admin.js', array( 'jquery' ), $this->version, false );
+		wp_register_script(
+			$this->plugin_name, 
+			plugins_url('admin/js/imjolwp-ai-automation-admin.js', dirname(__FILE__)), 
+			array('jquery'), 
+			$this->version, 
+			true // Load in footer for better performance
+		);
+		wp_enqueue_script($this->plugin_name);
 
 	}
 

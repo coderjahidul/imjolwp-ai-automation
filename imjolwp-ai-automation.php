@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       ImjolWP - AI Automation
- * Plugin URI:        https://github.com/coderjahidul/
+ * Plugin URI:        https://github.com/coderjahidul/imjolwp-ai-automation
  * Description:       ImjolWP is an AI-powered automation plugin that generates post titles, descriptions, images, summaries, audio, and videos using AI. It supports Elementor, automated scheduling, and a queue system to streamline content creation effortlessly.
  * Version:           1.0.0
  * Author:            Jahidul islam Sabuz
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'IMJOLWP_AI_AUTOMATION_FOR_WORDPRESS_VERSION', '1.0.0' );
+define( 'IMJOLWP_AI_AUTOMATION_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -50,24 +50,24 @@ use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_Deactivator;
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-imjolwp-ai-automation-for-wordpress-activator.php
+ * This action is documented in includes/class-imjolwp-ai-automation-activator.php
  */
-function activate_imjolwp_ai_automation_for_wordpress() {
-	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress-activator.php';
+function imjolwp_ai_automation_for_wordpress_activate() {
+	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-activator.php';
 	Imjolwp_Ai_Automation_For_Wordpress_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-imjolwp-ai-automation-for-wordpress-deactivator.php
+ * This action is documented in includes/class-imjolwp-ai-automation-deactivator.php
  */
-function deactivate_imjolwp_ai_automation_for_wordpress() {
-	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress-deactivator.php';
+function deimjolwp_ai_automation_for_wordpress_activate() {
+	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-deactivator.php';
 	Imjolwp_Ai_Automation_For_Wordpress_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_imjolwp_ai_automation_for_wordpress' );
-register_deactivation_hook( __FILE__, 'deactivate_imjolwp_ai_automation_for_wordpress' );
+register_activation_hook( __FILE__, 'imjolwp_ai_automation_for_wordpress_activate' );
+register_deactivation_hook( __FILE__, 'deimjolwp_ai_automation_for_wordpress_activate' );
 
 /**
  * Begins execution of the plugin.
@@ -78,13 +78,13 @@ register_deactivation_hook( __FILE__, 'deactivate_imjolwp_ai_automation_for_word
  *
  * @since    1.0.0
  */
-function run_imjolwp_ai_automation_for_wordpress() {
+function imjolwp_ai_automation_run() {
 
 	$plugin = new Imjolwp_Ai_Automation_For_Wordpress();
 	$plugin->run();
 
 }
-run_imjolwp_ai_automation_for_wordpress();
+imjolwp_ai_automation_run();
 
 // Generate focus keywords function
 function generate_focus_keywords($text) {

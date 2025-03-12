@@ -1,5 +1,5 @@
 === ImjolWP - AI Automation ===
-Contributors: jahidul
+Contributors: imjol
 Donate link: https://github.com/coderjahidul/
 Tags: ai, automation, content generation, elementor
 Requires at least: 5.0
