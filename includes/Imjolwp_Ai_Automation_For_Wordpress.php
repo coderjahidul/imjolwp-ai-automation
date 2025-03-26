@@ -79,7 +79,6 @@ class Imjolwp_Ai_Automation_For_Wordpress {
 		$this->plugin_name = 'imjolwp-ai-automation';
 
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
