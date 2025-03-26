@@ -77,7 +77,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
         // Generate Focus Keywords
         if ($post_id) {
             // Generate focus keywords
-            $focus_keywords = generate_focus_keywords($focus_keywords);
+            $focus_keywords = imjolwp_generate_focus_keywords($focus_keywords);
 
             // Save Focus Keywords in Yoast SEO
             update_post_meta($post_id, '_yoast_wpseo_focuskw', $focus_keywords);

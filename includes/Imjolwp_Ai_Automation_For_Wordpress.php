@@ -30,7 +30,6 @@
 namespace Imjolwp;
 use Imjolwp\Admin\Imjolwp_Ai_Automation_For_Wordpress_Admin;
 use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_Loader;
-use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_i18n;
 use Imjolwp\Public\Imjolwp_Ai_Automation_For_Wordpress_Public;
 class Imjolwp_Ai_Automation_For_Wordpress {
 
@@ -92,7 +91,6 @@ class Imjolwp_Ai_Automation_For_Wordpress {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Imjolwp_Ai_Automation_For_Wordpress_Loader. Orchestrates the hooks of the plugin.
-	 * - Imjolwp_Ai_Automation_For_Wordpress_i18n. Defines internationalization functionality.
 	 * - Imjolwp_Ai_Automation_For_Wordpress_Admin. Defines all hooks for the admin area.
 	 * - Imjolwp_Ai_Automation_For_Wordpress_Public. Defines all hooks for the public side of the site.
 	 *

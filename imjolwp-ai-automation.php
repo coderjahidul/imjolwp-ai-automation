@@ -53,7 +53,6 @@ use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_Deactivator;
  * This action is documented in includes/class-imjolwp-ai-automation-activator.php
  */
 function imjolwp_ai_automation_for_wordpress_activate() {
-	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-activator.php';
 	Imjolwp_Ai_Automation_For_Wordpress_Activator::activate();
 }
 
@@ -61,13 +60,12 @@ function imjolwp_ai_automation_for_wordpress_activate() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-imjolwp-ai-automation-deactivator.php
  */
-function deimjolwp_ai_automation_for_wordpress_activate() {
-	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-deactivator.php';
+function imjolwp_ai_automation_for_wordpress_deactivate() {
 	Imjolwp_Ai_Automation_For_Wordpress_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'imjolwp_ai_automation_for_wordpress_activate' );
-register_deactivation_hook( __FILE__, 'deimjolwp_ai_automation_for_wordpress_activate' );
+register_deactivation_hook( __FILE__, 'imjolwp_ai_automation_for_wordpress_deactivate' );
 
 /**
  * Begins execution of the plugin.
@@ -87,7 +85,7 @@ function imjolwp_ai_automation_run() {
 imjolwp_ai_automation_run();
 
 // Generate focus keywords function
-function generate_focus_keywords($text) {
+function imjolwp_generate_focus_keywords($text) {
 	$text = strtolower(wp_strip_all_tags($text)); // Convert to lowercase & remove HTML tags
     $text = preg_replace('/[^a-z0-9\s]/', '', $text); // Remove special characters
     $words = explode(' ', $text); // Split into words
