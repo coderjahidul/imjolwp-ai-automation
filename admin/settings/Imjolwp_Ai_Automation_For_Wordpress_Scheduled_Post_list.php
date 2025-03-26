@@ -68,7 +68,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list{
 			</table>
 	
 			<?php
-			// Delete scheduled event
 			if (isset($_GET['delete'])) {
 				$delete_timestamp = intval($_GET['delete']);
 				
@@ -82,9 +81,11 @@ class Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list{
 			
 				echo '<div class="updated"><p>Scheduled post deleted.</p></div>';
 				
-				// Redirect to avoid duplicate deletion on refresh
-				echo '<script>window.location.href="?page=imjolwp-ai-scheduled-posts";</script>';
-			}			
+				// Register and enqueue a script for the redirect
+				wp_register_script('imjolwp-ai-redirect', false); // No source since we're using inline
+				wp_enqueue_script('imjolwp-ai-redirect');
+				wp_add_inline_script('imjolwp-ai-redirect', 'window.location.href="?page=imjolwp-ai-scheduled-posts";');
+			}
 			?>
 		</div>
 		<?php

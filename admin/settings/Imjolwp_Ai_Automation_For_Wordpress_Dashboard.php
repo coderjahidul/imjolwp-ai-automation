@@ -37,16 +37,16 @@ class Imjolwp_Ai_Automation_For_Wordpress_Dashboard {
                         <div class="ai-feature-card">
                             <h3><?php echo esc_html($label); ?></h3>
 
-							<?php
-							/* translators: %s represents the label name in lowercase. */
-							echo '<p>' . esc_html(sprintf(__('Generate %s using AI.', 'imjolwp-ai-automation'), strtolower($label))) . '</p>';
-							?>
-							
+                            <?php
+                            /* translators: %s represents the label name in lowercase. */
+                            echo '<p>' . esc_html(sprintf(__('Generate %s using AI.', 'imjolwp-ai-automation'), strtolower($label))) . '</p>';
+                            ?>
+                            
                             <?php if (in_array($key, $pro_features)) { ?>
                                 <span class="pro-badge"><?php esc_html_e('Pro Feature', 'imjolwp-ai-automation'); ?></span>
                             <?php } else { ?>
                                 <label class="switch">
-                                    <input type="checkbox" data-feature="<?php echo esc_attr($key); ?>" <?php checked($enabled, '1'); ?> onchange="toggleFeature(this)">
+                                    <input type="checkbox" class="toggle-feature" data-feature="<?php echo esc_attr($key); ?>" <?php checked($enabled, '1'); ?>>
                                     <span class="slider"></span>
                                 </label>
                             <?php } ?>
@@ -56,33 +56,53 @@ class Imjolwp_Ai_Automation_For_Wordpress_Dashboard {
                 </div>
             </div>
         </div>
-        <script>
-            function toggleFeature(el) {
-                let feature = el.getAttribute("data-feature");
-                let status = el.checked ? 1 : 0;
-
-                let data = new FormData();
-                data.append("action", "toggle_ai_feature");
-                data.append("feature", feature);
-                data.append("status", status);
-                data.append("_ajax_nonce", "<?php echo esc_attr(wp_create_nonce('toggle_ai_feature_nonce')); ?>");
-
-                fetch(ajaxurl, {
-                    method: "POST",
-                    body: data
-                })
-                .then(response => response.json())
-                .then(res => {
-                    if (res.success) {
-                        console.log(`${feature} updated successfully`);
-                    } else {
-                        alert("Failed to update setting.");
-                        el.checked = !el.checked; // Revert if failed
-                    }
-                })
-                .catch(error => console.error("Error:", error));
-            }
-        </script>
         <?php
     }
+
+    /**
+     * Enqueue admin scripts and add inline JavaScript.
+     */
+    public function enqueue_admin_scripts() {
+        wp_enqueue_script('jquery');
+
+        // Enqueue a dummy script (WordPress requires an existing script handle to attach inline script)
+        wp_register_script('imjolwp-ai-admin-script', '');
+        wp_enqueue_script('imjolwp-ai-admin-script');
+
+        // Add inline script
+        wp_add_inline_script('imjolwp-ai-admin-script', '
+            jQuery(document).ready(function($) {
+                $(".toggle-feature").on("change", function() {
+                    let feature = $(this).data("feature");
+                    let status = $(this).is(":checked") ? 1 : 0;
+
+                    $.ajax({
+                        url: ajaxurl,
+                        method: "POST",
+                        data: {
+                            action: "toggle_ai_feature",
+                            feature: feature,
+                            status: status,
+                            _ajax_nonce: "' . esc_js(wp_create_nonce('toggle_ai_feature_nonce')) . '"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                console.log(feature + " updated successfully");
+                            } else {
+                                alert("Failed to update setting.");
+                                $(this).prop("checked", !status);
+                            }
+                        },
+                        error: function() {
+                            alert("An error occurred.");
+                            $(this).prop("checked", !status);
+                        }
+                    });
+                });
+            });
+        ');
+    }
 }
+
+// Hook the script enqueue function
+add_action('admin_enqueue_scripts', [new Imjolwp_Ai_Automation_For_Wordpress_Dashboard(), 'enqueue_admin_scripts']);
