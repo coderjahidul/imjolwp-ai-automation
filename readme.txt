@@ -9,11 +9,11 @@ Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-ImjolWP is an AI-powered automation plugin that helps you generate post titles, descriptions, images, summaries, audio, and videos.
+ImjolWP is an AI-powered automation plugin that helps you generate post titles, descriptions, images, meta description, focus keyphrase, audio, and videos.
 
 == Description ==
 
-ImjolWP – AI Automation automates content creation using AI. With this plugin, you can generate post titles, descriptions, images, summaries, audio, and video content effortlessly. The plugin integrates seamlessly with Elementor, allowing you to insert AI-generated content into your pages. It also includes automated scheduling, a queue system, and multi-language support.
+ImjolWP – AI Automation automates content creation using AI. With this plugin, you can generate post titles, descriptions, images, meta description, focus keyphrase, audio, and video content effortlessly. The plugin integrates seamlessly with Elementor, allowing you to insert AI-generated content into your pages. It also includes automated scheduling, a queue system, and multi-language support.
 
 **Key Features:**
 * AI-generated post titles, descriptions, images, summaries, audio, and video.
@@ -49,7 +49,7 @@ Yes, you can disable specific AI features in the ImjolWP Settings page.
 == Changelog ==
 
 = 1.0.0 =
-* Initial release with AI-powered post title, description, image, and video generation.
+* Initial release with AI-powered post title, description, image, meta description, focus keyphrase and video generation.
 * Elementor integration support.
 * Automated content scheduling and queue system.
 
