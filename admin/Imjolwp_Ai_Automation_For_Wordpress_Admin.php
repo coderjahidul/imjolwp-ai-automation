@@ -68,9 +68,11 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		require_once plugin_dir_path( __FILE__ ) . 'settings/Imjolwp_Ai_Automation_For_Wordpress_Scheduled_Post_list.php';
 
 		require_once plugin_dir_path( __FILE__ ) . 'partials/Imjolwp_Ai_Automation_For_Wordpress_Admin_Display.php';
+
+		require_once plugin_dir_path( __FILE__ ) . 'settings/Imjolwp_Ai_Automation_For_Wordpress_Settings.php';
 	}
 
-	public function settings_page() {
+	public function display_settings_page() {
 		// Load the settings page
 		$settings_page = new Imjolwp_Ai_Automation_For_Wordpress_Settings();
 		$settings_page->display_settings_page();  // Ensure this method is defined in your Settings_page class to render the page
@@ -167,16 +169,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 			array($this, 'imjolwp_ai_scheduled_posts_page')
 		);
 
-		// add_menu_page(
-		// 	'Scheduled AI Posts',
-		// 	'AI Scheduled Posts',
-		// 	'manage_options',
-		// 	'imjolwp-ai-scheduled-posts',
-		// 	'imjolwp_ai_scheduled_posts_page',
-		// 	'dashicons-schedule',
-		// 	25
-		// );
-
 		add_submenu_page(
             'imjolwp-ai-dashboard',
             'AI Post Generator',
@@ -218,7 +210,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		// Add the section to settings page
 		add_settings_section(
 			'imjolwp_ai_settings_section',  // Section ID
-			'API Configuration',            // Section Title
+			'',            					// Section Title
 			null,                           // Callback for description (null for no description)
 			'imjolwp-ai-settings'           // Settings page slug
 		);
@@ -226,7 +218,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		// Add fields to the section
 		add_settings_field(
 			'imjolwp_ai_api_url_field',     // Field ID
-			'API URL',                      // Field label
+			'Deepinfra API URL:',                      // Field label
 			array( $this, 'display_api_url_field' ), // Callback function to display the field
 			'imjolwp-ai-settings',          // Settings page slug
 			'imjolwp_ai_settings_section'   // Section ID
@@ -234,7 +226,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 
 		add_settings_field(
 			'imjolwp_ai_api_key_field',     // Field ID
-			'API Key',                      // Field label
+			'Deepinfra API Key:',                      // Field label
 			array( $this, 'display_api_key_field' ), // Callback function to display the field
 			'imjolwp-ai-settings',          // Settings page slug
 			'imjolwp_ai_settings_section'   // Section ID
@@ -248,7 +240,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 	 */
 	public function display_api_url_field() {
 		$api_url = get_option( 'imjolwp_ai_api_url' ); // Get the current saved API URL
-		echo "<label for='imjolwp_ai_api_url'><strong>Deepinfra API URL:</strong></label><br>";
 		echo "<input type='text' id='imjolwp_ai_api_url' placeholder='Enter Deepinfra API URL' name='imjolwp_ai_api_url' value='" . esc_attr( $api_url ) . "' class='regular-text' />";
 		// Example
 		echo "<p>Example: https://api.deepinfra.com</p>";
@@ -261,11 +252,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 	 */
 	public function display_api_key_field() {
 		$api_key = get_option( 'imjolwp_ai_api_key' ); // Get the current saved API Key
-		echo "<label for='imjolwp_ai_api_key'><strong>Deepinfra API Key:</strong></label><br>";
 		echo "<input type='password' id='imjolwp_ai_api_key' placeholder='Enter Deepinfra API Key' name='imjolwp_ai_api_key' value='" . esc_attr( $api_key ) . "' class='regular-text' />";
-
-		// Example
-		echo "<p>Example: 1w23w4w56w78e9r0</p>";
 	}
 
 
@@ -292,27 +279,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		} else {
 			wp_send_json_error(['message' => __('Invalid feature.', 'imjolwp-ai-automation')]);
 		}
-	}
-
-
-	/**
-	 * Display the settings page.
-	 *
-	 * @since 1.0.0
-	 */
-	public function display_settings_page() {
-		?>
-			<div class="wrap">
-				<h1>ImjolWP AI Settings</h1>
-				<form method="post" action="options.php">
-					<?php
-					settings_fields( 'imjolwp_ai_options_group' ); // Register settings group
-					do_settings_sections( 'imjolwp-ai-settings' ); // Display settings sections
-					submit_button();
-					?>
-				</form>
-			</div>
-    	<?php
 	}
 
 	// AI Post Generator Submenu Page
